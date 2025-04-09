@@ -2,6 +2,9 @@ import numpy as np
 import random
 import math
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+import sys
+
 
 class Gene:
     def __init__(self, alelos):
@@ -119,33 +122,36 @@ class AG:
 
 
 if __name__ == "__main__":
-    ag = AG(pop_size=70, gene_size=40, taxa_mutacao=0.02)  
-    geracoes = 50
+    ag = AG(pop_size=50, gene_size=20, taxa_mutacao=0.01)  
+    geracoes = 100
 
     fitness_result = []
     geracoes_result = []
+    o_file = open(f'results_{sys.argv[1]}.txt', 'w')
 
     for i in range(geracoes):
-        print(f"Geração {i}")
+        o_file.write(f"Geração {i}")
         ag.print_pop()
         
         #melhor gene
         melhor = ag.melhor_individuo()
-        print(f"Melhor: {melhor}")
-        print(f"x = {ag.bin_to_real(melhor)}")
+        o_file.write(f"Melhor: {melhor}")
+        o_file.write(f"x = {ag.bin_to_real(melhor)}")
 
         #fitness do melhor gene
-        print(f"Fitness: {ag.fitness(melhor)}\n")
+        o_file.write(f"Fitness: {ag.fitness(melhor)}\n")
         fitness_result.append(ag.fitness(melhor))
 
         geracoes_result.append(i)
         ag.nova_geracao_elitismo()
         
-    plt.scatter(geracoes_result, fitness_result)
+    cmap = mpl.colormaps['plasma'].colors 
+
+    plt.scatter(geracoes_result, fitness_result, color = cmap[0])
     plt.xlabel("Gerações")
     plt.ylabel(r"f(x)")
 
-    plt.savefig('fitness_elitismo.png')
+    plt.savefig(f'fitness_{sys.argv[1]}.png')
 
 
 
