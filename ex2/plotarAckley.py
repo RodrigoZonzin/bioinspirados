@@ -41,7 +41,7 @@ for i in range(X.shape[0]):
         Z[i, j] = fitness(gene)
 
 # Plot the surface
-surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+surf = ax.plot_surface(X, Y, Z, cmap=cm.inferno, linewidth=0, antialiased=False)
 
 # Customize the z axis
 ax.set_zlim(np.min(Z), np.max(Z))
