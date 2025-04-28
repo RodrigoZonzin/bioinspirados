@@ -82,7 +82,6 @@ class AG:
                 perturbacao = random.gauss(0, 0.1)  
                 gene.alelos[i] += perturbacao
 
-                # Manter dentro dos limites
                 gene.alelos[i] = max(self.intervalo[0], min(self.intervalo[1], gene.alelos[i]))
         return gene
 
@@ -127,12 +126,15 @@ class AG:
 if __name__ == "__main__":
     #random.seed(42)
 
-    ag = AG(pop_size=10, gene_size=6, taxa_mutacao=0.1, intervalo=(-2, 2))
-    gene_0 = Gene(alelos=[0]*6)
-    print('Gene 0:', gene_0)
-    print(f"Fitness(0) = {ag.fitness(gene_0)} ")
-    geracoes = 100
+    ag = AG(pop_size=30, gene_size=10, taxa_mutacao=0.1, intervalo=(-2, 2))
+    #gene_0 = Gene(alelos=[0]*6)
+    #print('Gene 0:', gene_0)
+    #print(f"Fitness(0) = {ag.fitness(gene_0)} ")
+    #ag.print_pop()
+    
+    fitness_result = []
 
+    geracoes = 100
     for i in range(geracoes):
         print(f"\nGeração {i}")
         ag.print_pop()
@@ -140,5 +142,13 @@ if __name__ == "__main__":
         melhor = ag.melhor_individuo()
         print(f"\nMelhor indivíduo: {melhor}")
         print(f"Fitness: {ag.fitness(melhor)}\n")
+        
+        fitness_result.append(ag.fitness(melhor))
 
-        ag.nova_geracao()
+        ag.nova_geracao_elitismo()
+
+    
+    plt.figure(figsize=(15, 10))
+    plt.scatter(x=range(geracoes), y=fitness_result)
+
+    plt.savefig('fitness.png')
