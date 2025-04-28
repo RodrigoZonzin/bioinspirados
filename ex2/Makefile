@@ -10,3 +10,6 @@ clean_txt:
 clean: 
 	make clean_png
 	make clean_txt
+
+clean_results: 
+	rm -r results
