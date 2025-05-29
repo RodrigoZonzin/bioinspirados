@@ -1,6 +1,9 @@
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import seaborn as sns
+
+cores = sns.color_palette("Set2", 2)
 
 class Gene:
     def __init__(self, alelos):
@@ -14,13 +17,14 @@ class Gene:
 
 
 class AG:
-    def __init__(self, matriz_dist, pop_size=200, taxa_mutacao=0.01, taxa_cruzamento=1.0, metodo_selecao="torneio"):
+    def __init__(self, matriz_dist, pop_size=200, taxa_mutacao=0.01, taxa_cruzamento=1.0, metodo_selecao="torneio", metodo_crossover="pmx"):
         self.matriz_dist = matriz_dist
         self.pop_size = pop_size
         self.gene_size = matriz_dist.shape[0]
         self.taxa_mutacao = taxa_mutacao
         self.taxa_cruzamento = taxa_cruzamento
         self.metodo_selecao = metodo_selecao
+        self.metodo_crossover = metodo_crossover
         self.pop = self._gerar_populacao()
 
     def _gerar_populacao(self):
@@ -29,7 +33,6 @@ class AG:
     def fitness(self, gene):
         caminho = gene.alelos
         dist = sum(self.matriz_dist[caminho[i]][caminho[i + 1]] for i in range(len(caminho) - 1))
-        #add distancia do ultimo ate o primeiro
         dist += self.matriz_dist[caminho[-1]][caminho[0]]
         return dist
 
@@ -52,17 +55,30 @@ class AG:
         if random.random() > self.taxa_cruzamento:
             return pai1.copy(), pai2.copy()
 
-        start, end = sorted(random.sample(range(self.gene_size), 2))
+        if self.metodo_crossover == "pmx":
+            return self.crossover_pmx(pai1, pai2), self.crossover_pmx(pai2, pai1)
+        elif self.metodo_crossover == "cx":
+            return self.crossover_cx(pai1, pai2), self.crossover_cx(pai2, pai1)
+        elif self.metodo_crossover == "ox":
+            return self.crossover_ox(pai1, pai2), self.crossover_ox(pai2, pai1)
+        else:
+            raise ValueError("Método de crossover inválido.")
 
-        def cria_filho(p1, p2):
-            meio = p1.alelos[start:end]
-            restante = [g for g in p2.alelos if g not in meio]
-            return Gene(restante[:start] + meio + restante[start:])
+    def crossover_pmx(self, p1, p2):
+        size = len(p1.alelos)
+        start, end = sorted(random.sample(range(size), 2))
+        f = [None] * size
+        f[start:end] = p1.alelos[start:end]
+        mapping = {p2.alelos[i]: p1.alelos[i] for i in range(start, end)}
+        for i in range(size):
+            if not (start <= i < end):
+                val = p2.alelos[i]
+                while val in f:
+                    val = mapping.get(val, val)
+                f[i] = val
+        return Gene(f)
 
-        return cria_filho(pai1, pai2), cria_filho(pai2, pai1)
-
-
-    def crossover_cx(p1, p2):
+    def crossover_cx(self, p1, p2):
         size = len(p1.alelos)
         filho = [None] * size
         index = 0
@@ -72,6 +88,19 @@ class AG:
         for i in range(size):
             if filho[i] is None:
                 filho[i] = p2.alelos[i]
+        return Gene(filho)
+
+    def crossover_ox(self, p1, p2):
+        size = len(p1.alelos)
+        start, end = sorted(random.sample(range(size), 2))
+        filho = [None] * size
+        filho[start:end] = p1.alelos[start:end]
+        remaining = [item for item in p2.alelos if item not in filho[start:end]]
+        ptr = 0
+        for i in range(size):
+            if filho[i] is None:
+                filho[i] = remaining[ptr]
+                ptr += 1
         return Gene(filho)
 
     def mutacao(self, gene):
@@ -105,27 +134,30 @@ class AG:
         return historico
 
 
-def plotar_resultado(resultados):
-    plt.plot(range(len(resultados)), resultados, marker='.', label="Melhor por geração")
+def plotar_resultado(resultados, metodo, i):
+    #plt.figure(figsize=(10, 8))
+    plt.plot(range(len(resultados)), resultados, marker='.', label=f"Melhor por geração ({metodo})", color = cores[i])
     plt.title('AG para TSP')
     plt.xlabel('Gerações')
     plt.ylabel('Distância total')
-    plt.grid(True)
+    #plt.grid(True)
     plt.legend()
-    plt.show()
+    plt.savefig(f'results_ter_{metodo}.png', dpi = 300)
+    #plt.show()
 
 
 def main():
     arquivo = "lau15_dist.txt"
     matriz = np.loadtxt(arquivo)
-    ag = AG(matriz, pop_size=200, taxa_mutacao=0.01, taxa_cruzamento=1.0, metodo_selecao="torneio")
-    resultados = ag.executar(geracoes=500)
+    for i, metodo in enumerate(['cx', 'ox']):
+        ag = AG(matriz, pop_size=200, taxa_mutacao=0.01, taxa_cruzamento=1.0, metodo_selecao="torneio", metodo_crossover=metodo)
+        resultados = ag.executar(geracoes=500)
 
-    with open("saida_1.txt", "w") as f:
-        for r in sorted(resultados, reverse=True):
-            f.write(f"{r}\n")
+        with open(f"saida_{metodo}.txt", "w") as f:
+            for r in sorted(resultados, reverse=True):
+                f.write(f"{r}\n")
 
-    plotar_resultado(resultados)
+        plotar_resultado(resultados, metodo, i)
 
 
 if __name__ == "__main__":
