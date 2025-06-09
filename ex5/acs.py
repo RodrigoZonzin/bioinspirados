@@ -127,7 +127,7 @@ class ACS():
 		return lista_arestas
 
 	def printar_params(self): 
-		print(f"alpha: {self.alpha}, beta: {self.beta}, epsilon: {self.epsilon}, rho:{self.rho}, Q:{self.Q}")
+		print(f"{self.alpha} & {self.beta} & {self.epsilon} \\\\")
 
 	def rodar(self): 
 		melhor_dist, melhores_caminhos = [], []
@@ -140,30 +140,106 @@ class ACS():
 			#print(f'{iteracao}:\t{self.melhor_distancia}\t{[int(x) for x in self.melhor_caminho]}')
 
 			if iteracao == 99 and self.melhor_distancia == 291: 
-				print('Sim')
+				#print('Sim')
 				self.printar_params()
-				print("*"*50)
+				#print("*"*50)
+				pass
 			elif iteracao == 99 and not(self.melhor_distancia == 291): 
-				print('Não atingiu: ')
-				self.printar_params()
-				print("*"*50)
+				#print('Não atingiu: ')
+				#self.printar_params()
+				#print("*"*50)
+				pass
 
 		return melhor_dist, melhores_caminhos
 	
 
-plt.figure(figsize=(10, 8), dpi = 300)
-nit = 100
+
+nit = 150
+"""
 for alpha in [0.5, 1, 1.2]: 
 	for beta in [0.5, 1, 5, 10]:
 		for epsilon in [0.01, 0.1, 0.5, 1, 3]:
 			acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
 			dist, caminhos 	= acs.rodar()
 
-			#plotando o fitness vs geracao			
+			#plotando o fitness vs geracao
+			plt.figure(figsize=(10, 8), dpi = 300)			
 			plt.scatter(y=dist, x = range(0, nit), label = f'{alpha}, {beta}, {epsilon}')
-			plt.savefig('results.png')
 			plt.legend()
+			plt.savefig(f'results_+{str(alpha)}+_{str(beta)}+_{str(epsilon)}.png')
+			plt.close()
+"""
+
+"""
+plt.figure(figsize=(10, 8), dpi = 300)	
+alpha, beta, epsilon = 1, 1, 0.5
+
+for ensaio in range(5): 
+	acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
+	dist, caminhos 	= acs.rodar()
+			
+	
+	plt.scatter(y=dist, x = range(0, nit), label = f'Ensaio: {ensaio}')
+	plt.legend()
+
+plt.savefig(f'results_ensaios_{str(ensaio)}_bom.png')
+plt.close()"""
 
 
+alpha, beta, epsilon = 1, 1, 0.5
+nit = 100
+for 
+acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
+dist, caminhos 	= acs.rodar()
+arestas = acs._cria_arestas(caminhos)
+print(arestas[-1])
+
+g = nx.DiGraph()
+for u in range(0, acs.n):
+	for v in range(0, acs.n):
+		if u != v: 
+			g.add_edge(u, v)
 
 
+pos =pos=nx.spring_layout(g, seed =42)
+
+nx.draw(g, pos, with_labels=True, node_color='lightblue', edge_color='gray', arrows=True)
+nx.draw_networkx_edges(
+    g,
+    pos,
+    edgelist=arestas[-1],
+    edge_color='red',
+    width=2.5,
+    arrows=True
+)
+
+nos_no_caminho = set([u for u, v in arestas[-1]] + [arestas[-1][-1][1]])
+nx.draw_networkx_nodes(
+    g,
+    pos,
+    nodelist=nos_no_caminho,
+    node_color='orange',
+    node_size=500
+)
+
+def extrair_caminho(arestas):
+    if not arestas:
+        return []
+    
+    caminho = [arestas[0][0]]  # começa com o primeiro nó de partida
+    for u, v in arestas:
+        caminho.append(v)
+    return str(caminho)
+
+
+plt.annotate(extrair_caminho(arestas[-1]),
+    xy=(0.05, 0.95),
+    xycoords='axes fraction',
+    fontsize=10,
+    verticalalignment='bottom',
+    bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5)
+)
+
+plt.savefig('grafo.png', dpi = 300)
+plt.show()
+plt.close()
