@@ -35,7 +35,7 @@ class ACS():
 		self.melhor_caminho 	= None
 		self.melhor_distancia 	= np.inf
 
-	def _gerar_matrix_distancia(self, arquivo='lau15_dist.txt'): 
+	def _gerar_matrix_distancia(self, arquivo='sgb128_dist.txt'): 
 		return np.loadtxt(fname=arquivo)
 
 	def _calcular_distancia(self, caminho): 
@@ -130,6 +130,7 @@ class ACS():
 		print(f"{self.alpha} & {self.beta} & {self.epsilon} \\\\")
 
 	def rodar(self): 
+		print("inicio algoritmo\n")
 		melhor_dist, melhores_caminhos = [], []
 		
 		for iteracao in range(self.iteracoes): 
@@ -149,32 +150,33 @@ class ACS():
 				#self.printar_params()
 				#print("*"*50)
 				pass
-
+		print(self.iteracoes, melhor_dist)
 		return melhor_dist, melhores_caminhos
 	
 
 
-nit = 150
-"""
-for alpha in [0.5, 1, 1.2]: 
-	for beta in [0.5, 1, 5, 10]:
-		for epsilon in [0.01, 0.1, 0.5, 1, 3]:
+"""nit = 150
+plt.figure(figsize=(10, 8), dpi = 300)
+for alpha in [1, 5, 10]: 
+	for beta in [5]:
+		for epsilon in [5]:
 			acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
 			dist, caminhos 	= acs.rodar()
 
 			#plotando o fitness vs geracao
-			plt.figure(figsize=(10, 8), dpi = 300)			
+						
 			plt.scatter(y=dist, x = range(0, nit), label = f'{alpha}, {beta}, {epsilon}')
-			plt.legend()
-			plt.savefig(f'results_+{str(alpha)}+_{str(beta)}+_{str(epsilon)}.png')
-			plt.close()
+#plt.legend()
+plt.savefig(f'results_variandoAlpha.png')
+plt.close()
 """
 
-"""
-plt.figure(figsize=(10, 8), dpi = 300)	
-alpha, beta, epsilon = 1, 1, 0.5
+nit = 200
+plt.figure(figsize=(8, 5), dpi = 300)	
+alpha, beta, epsilon = 5, 10, 0.5
 
-for ensaio in range(5): 
+for ensaio in range(4): 
+	print(f"Entrei no Ensaio {ensaio}")
 	acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
 	dist, caminhos 	= acs.rodar()
 			
@@ -182,13 +184,14 @@ for ensaio in range(5):
 	plt.scatter(y=dist, x = range(0, nit), label = f'Ensaio: {ensaio}')
 	plt.legend()
 
-plt.savefig(f'results_ensaios_{str(ensaio)}_bom.png')
-plt.close()"""
+plt.savefig(f'sgb_results_ensaios_rodando1_{str(ensaio)}.png')
+plt.close()
 
 
+"""
 alpha, beta, epsilon = 1, 1, 0.5
 nit = 100
-for 
+
 acs = ACS(alpha=alpha, beta=beta, rho=0.5, Q=100, epsilon= epsilon, n_iteracoes=nit)
 dist, caminhos 	= acs.rodar()
 arestas = acs._cria_arestas(caminhos)
@@ -205,41 +208,120 @@ pos =pos=nx.spring_layout(g, seed =42)
 
 nx.draw(g, pos, with_labels=True, node_color='lightblue', edge_color='gray', arrows=True)
 nx.draw_networkx_edges(
-    g,
-    pos,
-    edgelist=arestas[-1],
-    edge_color='red',
-    width=2.5,
-    arrows=True
+	g,
+	pos,
+	edgelist=arestas[-1],
+	edge_color='red',
+	width=2.5,
+	arrows=True
 )
 
 nos_no_caminho = set([u for u, v in arestas[-1]] + [arestas[-1][-1][1]])
 nx.draw_networkx_nodes(
-    g,
-    pos,
-    nodelist=nos_no_caminho,
-    node_color='orange',
-    node_size=500
+	g,
+	pos,
+	nodelist=nos_no_caminho,
+	node_color='orange',
+	node_size=500
 )
 
 def extrair_caminho(arestas):
-    if not arestas:
-        return []
-    
-    caminho = [arestas[0][0]]  # começa com o primeiro nó de partida
-    for u, v in arestas:
-        caminho.append(v)
-    return str(caminho)
+	if not arestas:
+		return []
+	
+	caminho = [arestas[0][0]]  # começa com o primeiro nó de partida
+	for u, v in arestas:
+		caminho.append(v)
+	return str(caminho)
 
 
 plt.annotate(extrair_caminho(arestas[-1]),
-    xy=(0.05, 0.95),
-    xycoords='axes fraction',
-    fontsize=10,
-    verticalalignment='bottom',
-    bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5)
+	xy=(0.05, 0.95),
+	xycoords='axes fraction',
+	fontsize=10,
+	verticalalignment='bottom',
+	bbox=dict(boxstyle="round", facecolor="wheat", alpha=0.5)
 )
 
 plt.savefig('grafo.png', dpi = 300)
 plt.show()
 plt.close()
+"""
+
+def analisar_alpha():
+	plt.figure(figsize=(8,5), dpi =300)
+	alphas = [0.5, 5, 10]
+	for alpha in alphas:
+		acs = ACS(alpha=alpha, beta=5, rho=0.5, n_iteracoes=100)
+		melhor_dist, _ = acs.rodar()
+		plt.scatter(y=melhor_dist, x= range(100), label=rf'$\alpha$={alpha}')
+	plt.axhline(291, color='black', linestyle='--', label='Ótimo Global (291)')
+	plt.title(rf'Impacto de $\alpha$')
+	plt.xlabel('Iterações')
+	plt.ylabel('Melhor distância')
+	plt.legend()
+	#plt.grid()
+	#plt.show()
+	plt.savefig('resultsAnaliseAlpha.png')
+
+def analisar_beta():
+	plt.figure(figsize=(8,5), dpi =300)
+	betas = [0.5, 5, 10]
+	for beta in betas:
+		acs = ACS(alpha=1, beta=beta, rho=0.5, n_iteracoes=100)
+		melhor_dist, _ = acs.rodar()
+		plt.scatter(y=melhor_dist, x= range(100), label=rf'$\beta=${beta}')
+	plt.axhline(291, color='black', linestyle='--', label='Ótimo Global = 291')
+	plt.title(rf'Impacto de $\beta$')
+	plt.xlabel('Iterações')
+	plt.ylabel('Melhor distância')
+	plt.legend()
+	#plt.grid()
+	#plt.show()
+	plt.savefig('resultsAnaliseBeta.png')
+
+def analisar_rho():
+	plt.figure(figsize=(8,5), dpi =150)
+	rhos = [0.25, 0.5, 0.75]
+	for rho in rhos:
+		acs = ACS(alpha=1, beta=5, rho=rho, n_iteracoes=100)
+		melhor_dist, _ = acs.rodar()
+		plt.scatter(y=melhor_dist, x= range(100), label=rf'$\rho=${rho}')
+	plt.axhline(291, color='black', linestyle='--', label='Ótimo Global = 291')
+	plt.title(rf'Impacto de $\rho$')
+	plt.xlabel('Iterações')
+	plt.ylabel('Melhor distância')
+	plt.legend()
+	#plt.grid()
+	#plt.show()
+	plt.savefig('resultsAnaliseRho.png')
+
+def analisar_iteracoes():
+	iteracoes = [50, 100, 150]
+	combinacoes = [
+		{'alpha': 1.2, 'beta': 10, 'rho': 0.5},
+		{'alpha': 1, 'beta': 1, 'rho': 0.5},
+	]
+
+	for i, params in enumerate(combinacoes):
+		plt.figure(figsize=(8,5), dpi =300)
+		for it in iteracoes:
+			acs = ACS(alpha=params['alpha'], beta=params['beta'], rho=params['rho'], n_iteracoes=it, epsilon=5)
+			melhor_dist, _ = acs.rodar()
+			plt.plot(range(len(melhor_dist)), melhor_dist, label=f'{it} iterações')
+			if melhor_dist[-1] == 291:
+				print(f"Ótimo alcançado com {params} e {it} iterações.")
+		#plt.axhline(291, color='black', linestyle='--', label='Ótimo Global (291)')
+		plt.title(f'Impacto do número de iterações')
+		plt.xlabel('Iterações')
+		plt.ylabel('Melhor distância')
+		plt.legend()
+		#plt.grid()
+		#plt.show()
+		plt.savefig('resultsAnaliseiteracoes.png')
+
+
+#analisar_alpha()
+#analisar_beta()
+#analisar_rho()
+#analisar_iteracoes()
