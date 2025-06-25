@@ -1,5 +1,16 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[46]:
+
+
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+
+
+# In[2]:
+
 
 class Particula():
     def __init__(self, n, limites):
@@ -10,6 +21,10 @@ class Particula():
 
     def __str__(self):
         return f"X  = {self.x}\nV  = {self.v}\nPb = {self.pbest}\n"
+
+
+# In[3]:
+
 
 class PSO(): 
     def __init__(self, n, m=40, c1=2.0, c2=2.0, w=0.7, max_iter=100):
@@ -66,23 +81,66 @@ class PSO():
                 particula.x = np.clip(particula.x, self.limites[0], self.limites[1])
 
             result_fitness.append(self.best_fitness)
-        
+
             #print(f"It: {it+1}/{self.max_iter}\t\tMelhor fitness = {self.best_fitness:.10f}")
         return result_fitness
 
-ks, melhor_fitness = [], []
 
-for k in [10, 20, 50, 100, 200, 500, 1000, 200]: 
-    meupso = PSO(n=10, m=200, max_iter=k)
-    results = meupso.rodar()
+# In[74]:
 
-    ks.append(k)
-    melhor_fitness.append(meupso.best_fitness)
 
 plt.figure(figsize=(10, 8), dpi = 400)
-plt.scatter(x = ks , y=melhor_fitness)
-plt.xlabel('Iterações')
+
+
+for j in range(10):
+    ks, melhor_fitness = [], []
+    for k in [5, 10, 20, 50, 70, 100, 150, 200, 400]: 
+            meupso = PSO(n=10, m=k, max_iter=150)
+            results = meupso.rodar()
+
+            ks.append(k)
+            melhor_fitness.append(meupso.best_fitness)
+
+    plt.scatter(x = ks , y=melhor_fitness, label = f'Ensaio {j+1}')
+#plt.plot(ks, melhor_fitness, ls= '-.', label = f'Ensaio {j+1}')
+plt.xlabel('Número de Partículas')
 plt.ylabel('Melhor Fitness')
 plt.tight_layout()
-plt.savefig('results.png', dpi = 400)
+plt.legend()
+
+plt.savefig('variando_m.png', dpi = 400)
+#plt.show()
+
+
+# In[78]:
+
+
+dados = []
+for k in [5, 10, 20, 30, 70, 100, 200]: 
+    for it in [100, 125, 150, 175, 200, 300, 400, 500]:
+        meupso = PSO(n=10, m=k, max_iter=it)
+        results = meupso.rodar()
+        dados.append({'k': k, 'it': it, 'fitness': meupso.best_fitness})
+
+df = pd.DataFrame(dados)
+
+
+# In[79]:
+
+
+tabela = df.pivot(index='it', columns='k', values='fitness')
+
+
+# In[80]:
+
+
+import seaborn as sns
+
+plt.figure(figsize=(10, 7), dpi=400)
+sns.heatmap(tabela, annot=True, cmap='cividis', fmt=".3f")
+plt.xlabel("Número de partículas (m)")
+plt.ylabel("Número de iterações")
+plt.tight_layout()
+plt.savefig("heatmap_fitness_novo.png", dpi=400)
+plt.show()
 
