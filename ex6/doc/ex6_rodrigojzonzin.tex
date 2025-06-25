@@ -7,7 +7,9 @@
 \usepackage{booktabs} 
 \usepackage{hyperref}
 \usepackage{rotating}
+\usepackage{enumitem}
 \usepackage{amssymb}
+\usepackage{amsmath}
 \usepackage[top=3cm, right=3cm, left=3cm, right=3cm]{geometry}
 \usepackage{enumitem}
 \definecolor{codegreen}{rgb}{0,0.6,0}
@@ -27,7 +29,7 @@
 	A função a ser otimizada é a função de Ackley 10-dimensional, $f: \mathbb{R}^{10} \mapsto \mathbb{R}$. 
 	
 	
-	\section{Otimização dos parâmetros $k$, $m$ e $w$ }
+	\section{Otimização dos parâmetros $k$, $m$ e $w$ } \label{secotimizacao}
 	
 	A Figura \ref{fig_variacaoiteracoes} apresenta 5 ensaios para diferentes valores de iteração máxima. \\
 	$k \in~\{10, 20, 50, 100, 200, 500, 1000, 2000\}$.
@@ -62,5 +64,35 @@
 	\end{figure}
 	
 	Como se observa, para $k \geq 200$, 20 partículas já são suficientes para se obter uma boa aproximação para os zeros da função objetivo. Para $k=300$, o erro da aproximação é menor que $0.1$ em todos os casos examinados. Dessa maneira, mantém-se $k=500$ e se sugere $  20 \leq m \leq 70 $ como parâmetros gerais. 
+	
+	Por fim, a análise do parâmetro de diversificação, realizou-se o teste com $k=150$ e $m=30$. Nesse caso, testou-se $w \in  \{ -1.5; 1.5\}$ variando no intervalo com um passo $dw = 0.001$. 
+	A Figura \ref{fig_possivelresultadow} apresenta o resultado das execuções. Como se observa, o melhor fitness é encontrado para valores próximo a $w=0.5$.
+	
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.7\linewidth]{../possivel_resultado_w}
+		\caption{\textit{Fitness vs} w}
+		\label{fig_possivelresultadow}
+	\end{figure}
+	Dessa maneira, sugere-se $w = 0.5$. 
+	
+	
+	\section{Função de Ackley com 128 dimensões}
+	A partir da otimização dos parâmetros proposta na Seção \ref{secotimizacao}, buscou-se obter o mínimo globla conhecido $f(\mathbf{x}) = 0$ onde $\mathbf{x}= \begin{pmatrix}
+		x_0 \\
+		x_1 \\
+		\vdots \\
+		x_{127}
+	\end{pmatrix}$, $\forall x_i \in \mathbb{R}$.
+	
+	Os parâmetros utilizados foram: 
+	\begin{itemize}[itemsep=0pt, topsep=0pt, parsep=0pt, partopsep=0pt]
+		\item $n = 10$
+		\item $m = 30$
+		\item $w = 0.5$
+		\item $k = 500$ iterações
+		\item $c_1 = 2$
+		\item $c_2 = 0.75$
+	\end{itemize}
 	
 \end{document}
