@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.4)  25 JUN 2025 13:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.4)  25 JUN 2025 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -583,9 +583,14 @@ File: ../possivel_resultado_w.png Graphic file (type png)
 <use ../possivel_resultado_w.png>
 Package pdftex.def Info: ../possivel_resultado_w.png  used on input line 73.
 (pdftex.def)             Requested size: 310.50357pt x 248.40105pt.
- [3 <../heatmap_fitness_novo.png> <../possivel_resultado_w.png>] [4{/usr/share/
-texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-(./ex6_rodrigojzonzin.aux)
+ [3 <../heatmap_fitness_novo.png> <../possivel_resultado_w.png>]
+<../rodando128_1.png, id=56, 722.7pt x 578.16pt>
+File: ../rodando128_1.png Graphic file (type png)
+<use ../rodando128_1.png>
+Package pdftex.def Info: ../rodando128_1.png  used on input line 102.
+(pdftex.def)             Requested size: 310.50357pt x 248.40105pt.
+ [4{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <../rodando128_
+1.png>] (./ex6_rodrigojzonzin.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
@@ -594,10 +599,10 @@ Package rerunfilecheck Info: File `ex6_rodrigojzonzin.out' has not changed.
 (rerunfilecheck)             Checksum: 053256B688D77DF799BD77A4E2D01A8D;612.
  ) 
 Here is how much of TeX's memory you used:
- 13149 strings out of 474222
- 205379 string characters out of 5748733
+ 13162 strings out of 474222
+ 205677 string characters out of 5748733
  1930975 words of memory out of 5000000
- 35209 multiletter control sequences out of 15000+600000
+ 35221 multiletter control sequences out of 15000+600000
  569077 words of font info for 78 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,9n,79p,520b,460s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -612,10 +617,10 @@ blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb
 >
-Output written on ex6_rodrigojzonzin.pdf (4 pages, 1012300 bytes).
+Output written on ex6_rodrigojzonzin.pdf (4 pages, 1123861 bytes).
 PDF statistics:
- 114 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
- 45 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 119 PDF objects out of 1000 (max. 8388607)
+ 80 compressed objects within 1 object stream
+ 13 named destinations out of 1000 (max. 500000)
+ 50 words of extra memory for PDF output out of 10000 (max. 10000000)
 

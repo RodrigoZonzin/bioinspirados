@@ -12,7 +12,7 @@ class Particula():
         return f"X  = {self.x}\nV  = {self.v}\nPb = {self.pbest}\n"
 
 class PSO(): 
-    def __init__(self, n, m=40, c1=2.0, c2=2.0, w=0.7, max_iter=100):
+    def __init__(self, n, m=40, c1=2.0, c2=.075, w=0.7, max_iter=100):
         self.limites = (-10, 10)
         self.m      = m
         self.c1     = c1
@@ -39,6 +39,7 @@ class PSO():
         result_fitness = []
 
         for it in range(self.max_iter):
+            print(f"Iteracao {it}/{self.max_iter}")
             for particula in self.pop:
                 f = self.fitness(particula.x)
 
@@ -70,7 +71,7 @@ class PSO():
             #print(f"It: {it+1}/{self.max_iter}\t\tMelhor fitness = {self.best_fitness:.10f}")
         return result_fitness
 
-ks, melhor_fitness = [], []
+"""ks, melhor_fitness = [], []
 
 for k in [10, 20, 50, 100, 200, 500, 1000, 200]: 
     meupso = PSO(n=10, m=200, max_iter=k)
@@ -84,5 +85,5 @@ plt.scatter(x = ks , y=melhor_fitness)
 plt.xlabel('Iterações')
 plt.ylabel('Melhor Fitness')
 plt.tight_layout()
-plt.savefig('results.png', dpi = 400)
+plt.savefig('results.png', dpi = 400)"""
 
