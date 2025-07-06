@@ -90,7 +90,7 @@ class FPA():
                     L = levy_stable.rvs(self._lambda, beta=0, size=self.m)
                     x_new = xi + L*(self.gestrela.valores - xi)
                 
-                #Polinizacao global
+                #Polinizacao local
                 else:
                     j = random.randint(0, self.n - 1)
                     k = random.randint(0, self.n - 1)
