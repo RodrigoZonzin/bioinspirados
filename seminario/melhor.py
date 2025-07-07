@@ -4,8 +4,8 @@ import seaborn as sns
 from FPA_ox import *
 
 # Parâmetros de varredura
-p_values = np.arange(0.1, 1.1, 0.1)
-taxa_corte_values = np.arange(0.1, 1.1, 0.1)
+p_values = np.arange(0.1, 1.1, 0.2)
+taxa_corte_values = np.arange(0.1, 1.1, 0.2)
 
 # Matriz para armazenar os melhores makespans
 resultados = np.zeros((len(p_values), len(taxa_corte_values)))
