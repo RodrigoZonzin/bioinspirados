@@ -33,6 +33,7 @@ class Polen():
             self.valores = np.array(valores)
         else:
             self.valores = np.random.permutation(m)
+        
 
     def __str__(self):
         return ' '.join(str(v) for v in self.valores) 
@@ -41,21 +42,19 @@ class Polen():
         return self.__str__()
 
 class FPA(): 
-    def __init__(self, n, m = 10, taxa_corte = 0.2):
-        self.N, self.M = None, None
+    def __init__(self, taxa_corte = 0.4):
         self.intervalo = (-4, 4)
-        self.tempos     = self.get_tempos()
-        self.n = n                                      #dimensao de cada vetor solucao
-        self.m = m                                      #numero de flores na populacao
-        self.pop = [Polen(self.m) for _ in range(n)]    #POPULACAO = [X1, X2, ..., Xn]
+        self.tempos    = self.get_tempos()
+        #self.n = None                                      #dimensao de cada vetor solucao
+        #self.m = None                                      #numero de flores na populacao
+        self.pop = [Polen(self.m) for _ in range(1000)]     #POPULACAO = [X1, X2, ..., Xn]
         self.L  = None 
-        self.p  = 0.8
-        self._lambda = 1.5
-        self.maxIt = 500
+        self.p  = 0.9
+        self._lambda = 2.
+        self.maxIt = 1000
         self.gestrela = None
-        self.corte = int(taxa_corte*n)
+        self.taxa_corte = taxa_corte
         self.melhor_fitness = None
-        print('n, m:', self.n, self.m)
 
     def get_tempos(self): 
         with open(sys.argv[1], 'r') as f:
@@ -66,9 +65,8 @@ class FPA():
                 linha = list(map(float, f.readline().split()))
                 matriz.append(linha)
 
-        self.N = N 
         self.n = N 
-        self.M = M
+        self.m = M 
         return matriz
 
     """def fitness(self, x):
@@ -78,24 +76,26 @@ class FPA():
         part2 = np.sum(np.cos(2 * np.pi * x)) / n
         return -20 * np.exp(part1) - np.exp(part2) + 20 + np.e
     """
+
     def fitness(self, x):
         # x é uma instância de Polen ou um array diretamente
         if isinstance(x, Polen):
-            sequencia = list(map(int, x.valores % self.N))  # garante índices válidos
+            sequencia = list(map(int, x.valores % self.n))  # garante índices válidos
         else:
-            sequencia = list(map(int, x % self.N))          # no caso de array
+            sequencia = list(map(int, x % self.n))          # no caso de array
 
         # Remove duplicatas e completa com tarefas faltantes (para garantir permutação)
         sequencia = list(dict.fromkeys(sequencia))
-        faltantes = [i for i in range(self.N) if i not in sequencia]
+        faltantes = [i for i in range(self.n) if i not in sequencia]
         sequencia += faltantes
         return calcular_makespan(sequencia, self.tempos)
     
     def ox_crossover(self, pai1, pai2):
-        n_preservados = self.corte
+        n_preservados = int(self.m*self.taxa_corte)
         tamanho = len(pai1)
 
         # Escolhe aleatoriamente a posição de início para os genes preservados
+        #print('m, taxa, tamanho:', self.m, self.taxa_corte, n_preservados)
         inicio = np.random.randint(0, tamanho - n_preservados + 1)
         fim = inicio + n_preservados
 
@@ -138,10 +138,20 @@ class FPA():
                 #Polinizacao global
                 if np.random.rand() < self.p:
                     #gera a distribuicao de Levy 
+
+            
                     L1 = levy_stable.rvs(self._lambda, beta=0, size=self.m)
                     L2 = levy_stable.rvs(self._lambda, beta=0, size=self.m)
-                    x_new   = xi1 + L1*(self.gestrela.valores - xi1)
-                    x_new2  = xi2 + L2*(self.gestrela.valores - xi2)
+                    
+                    perturb = list(zip(xi1, L1))
+                    perturb.sort(key=lambda x: x[1])
+                    x_new = np.array([x[0] for x in perturb], dtype=int)                    
+
+                    perturb = list(zip(xi1, L2))
+                    perturb.sort(key=lambda x: x[1])
+                    x_new2 = np.array([x[0] for x in perturb], dtype=int)                    
+
+                    #x_new2  = xi2 + L2*(self.gestrela.valores - xi2)
                 
                 #Polinizacao local
                 else:
@@ -195,7 +205,7 @@ class FPA():
 
 
 
-fpa = FPA(10, m  = 3)
+fpa = FPA()
 fpa.rodar()
 plt.scatter(range(fpa.maxIt), fpa.historico_fitness)
 plt.savefig('results.png', dpi = 400)
