@@ -199,7 +199,7 @@ for p in [0.8]:
     print(fpa)
 """
 
-fpa = FPA(num_polens=200, taxa_corte = 0.2, p = 0.9, _lambda = 1.5, maxIt=5000)
+fpa = FPA(num_polens=1000, taxa_corte = 0.2, p = 0.9, _lambda = 1.5, maxIt=1000)
 fpa.rodar()
 plt.figure(figsize=(10,8))
 plt.scatter(range(fpa.maxIt), fpa.historico_fitness)
