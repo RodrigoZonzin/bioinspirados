@@ -198,3 +198,10 @@ for p in [0.8]:
     plt.savefig(f'results_p-{str(p)}.png', dpi = 400)
     print(fpa)
 """
+
+fpa = FPA(num_polens=200, taxa_corte = 0.2, p = 0.9, _lambda = 1.5, maxIt=5000)
+fpa.rodar()
+plt.figure(figsize=(10,8))
+plt.scatter(range(fpa.maxIt), fpa.historico_fitness)
+plt.savefig(f'results_p.png', dpi = 400)
+print(fpa)

@@ -1,21 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from FPA_ox2 import *
+from FPA_ox import *
 
 # Listas para armazenar os valores
-num_polens_list = list(range(1, 200))
+num_polens_list = list(range(2, 100, 2))
 melhores_fitness = []
 
 # Avaliando o impacto de num_polens
 for num_polens in num_polens_list: 
-    fpa = FPA(num_polens=num_polens, maxIt=600)
+    fpa = FPA(num_polens=num_polens, maxIt=1000)
     fpa.rodar()
-    melhores_fitness.append(fpa.melhor_makespan)  # ou fpa.melhor_fitness
+    melhores_fitness.append(fpa.melhor_fitness)  # ou fpa.melhor_fitness
 
 # Gráfico de haste (stem plot)
 plt.figure(figsize=(12, 6))
-(markerline, stemlines, baseline) = plt.stem(num_polens_list, melhores_fitness, use_line_collection=True)
+(markerline, stemlines, baseline) = plt.stem(num_polens_list, melhores_fitness)
 plt.setp(markerline, marker='o', markersize=4)
 plt.setp(stemlines, linewidth=0.8)
 

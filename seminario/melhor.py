@@ -13,7 +13,7 @@ resultados = np.zeros((len(p_values), len(taxa_corte_values)))
 # Loop sobre combinações de parâmetros
 for i, p in enumerate(p_values):
     for j, taxa_corte in enumerate(taxa_corte_values):
-        fpa = FPA(p=p, taxa_corte=taxa_corte, _lambda=1.0, num_polens=200, maxIt=1000)
+        fpa = FPA(p=p, taxa_corte=taxa_corte, _lambda=1.5, num_polens=60, maxIt=1000)
         fpa.rodar()
         resultados[i, j] = fpa.melhor_fitness  # ou fpa.melhor_fitness se esse for o nome
 
@@ -25,4 +25,4 @@ plt.ylabel("p")
 #plt.title("Melhor Makespan obtido por combinação de parâmetros")
 plt.tight_layout()
 #plt.show()
-plt.savefig('heatmap.png', dpi = 400)
+plt.savefig('heatmap2.png', dpi = 400)
