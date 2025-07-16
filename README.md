@@ -83,7 +83,7 @@ $$
 we modified the continuous Lévy distribution to a discrete representation. Then,
 
 $$
-\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L_d(\mathbf{x}^{t}_i - g_*)
+\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L_d(\mathbf{x}^{t}_i - g_{\cdot})
 $$
 
 Locally, we introduced the OX operator to maintain spatial-related optimization. For $i \neq j \neq k$,
