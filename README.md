@@ -74,11 +74,20 @@ $$\mathbf{x}_i, \ \mathbf{x}_j = OX(\mathbf{x}_i, \ \mathbf{x}_k)$$
 where $OX: \mathbf{x} \times \mathbf{x}_n \mapsto \mathbf{x}_n$ is the GA operator. 
 
 #### Results 
-The global minimum is not know, but previous approaches have obtained $f(\cdot) \approx 22 000$. 
+The global minimum is not know, but previous approaches have obtained $f_1(*) \approx 900$ and $f_2(*) \approx 22 000$. 
 <div style="display: flex; justify-content: center; gap: 20px;">
   <img src="flower_pollination_algorithm_fssp/wallace_alteracao/results/variasExecucoes05.png" width="400"/>
   <img src="flower_pollination_algorithm_fssp/wallace_alteracao/variasExecucoes07.png" width="400"/>
 </div>
+
+
+| Grupo | Mínimo | Tempo (s) |
+|-------|--------|-----------|
+| 1     | 914    | 35        |
+| 2     | 903    | 4.44      |
+| 3     | 919    | 55        |
+| 4     | 933    | 2.6       |
+| FPA   | 929    | 14.88     |
 
 <img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="400" style="display: block; margin: auto"/>
 
