@@ -81,7 +81,7 @@ The global minimum is not know, but previous approaches have obtained $f_1(*) \a
 </div>
 
 
-| Group | Minimum 1        | Execution Time(s)  |    |Group  | Minimum 2        | Execution Time(s) |
+| Group | Minimum 1        | Execution Time (s)  |    |Group  | Minimum 2        | Execution Time (s) |
 |-------|------------------|-----------         |----|-------|------------------|-----------|
 | 1     | 914              | 35                 |    | 1     | 2309             | 231       |
 | 2     | 903              | 4.44               |    | 2     | 2310             | 45        |
