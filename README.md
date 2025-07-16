@@ -29,7 +29,7 @@ Classic combinatorial optimization problem that aims to find the shortest possib
 
 $$f(\pi)=\sum_{i=1}^{n-1} \rho(\pi(i), \pi(i+1))+\rho(\pi(n), \pi(1))$$
 
-where  $\rho(a, b)$ represents the distance between cities $a$ and $b$. For testing (lau_15.txt instance), the global minimun is known as $ f(\pi_0) = 291$. 
+where  $\rho(a, b)$ represents the distance between cities $a$ and $b$. For testing (lau_15.txt instance), the global minimun is known as $f(\pi_0) = 291$. 
 
 #### Results
 
