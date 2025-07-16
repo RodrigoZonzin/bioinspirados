@@ -45,6 +45,8 @@ where $\rho(a, b)$ represents the distance between cities $a$ and $b$. For testi
 ## Flower Pollination Algorithm - FSSP  
 Proposed by Yang (2012), the FPA is simple and effective. It was implemented as part of my final evaluation. In this project, we revisited the original continuous version and extended it to tackle the Flow Shop Scheduling Problem (FSSP), which demands a combinatorial representation.
 
+<img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="200" style="display: block; margin: auto"/>
+
 Key adaptations include:  
 - Modified global and local pollination operators to maintain feasibility in the FSSP context.  
 - Discretization of the Lévy distribution to preserve global permutation-based solutions.  
@@ -54,7 +56,7 @@ Key adaptations include:
 Originally, FPA global optimization is defined by the equation:  
 
 $$
-    \mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_{bst})
+\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_{bst})
 $$
 
 where $g_{bst}$ is the global minimum and $L$ is a Lévy-distributed parameter.  
@@ -109,5 +111,3 @@ The global minimum is not known, but previous approaches have obtained $f_1(\cdo
 | 3     | 919              | 55                  |    | 3     | 2297             | 1.32                |
 | 4     | 933              | 2.6                 |    | 4     | 2366             | 163                 |
 | FPA   | 929              | 14.88               |    | FPA   | 2410             | 27.63               |
-
-<img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="400" style="display: block; margin: auto"/>
