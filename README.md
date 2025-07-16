@@ -56,7 +56,7 @@ Key adaptations include:
 Originally, FPA global optimization is defined by the equation:  
 
 $$
-{x}^{t+1}_i = {x}^{t}_i + L({x}^{t}_i - g_{bst})
+x^{t+1}_i = x^{t}_i + L(x^t_i - g_{bst})
 $$
 
 where $g_{bst}$ is the global minimum and $L$ is a Lévy-distributed parameter.  
@@ -68,7 +68,7 @@ $$
 Locally, the pollination follows the equation:  
 
 $$
-{x}_i^{t+1} = {x}_i^{t} + \epsilon ({x}_j^t - {x}_k^t)
+x_i^{t+1} = x_i^{t} + \epsilon (x_j^t - x_k^t)
 $$  
 
 where $\epsilon$ follows a uniform distribution.  
