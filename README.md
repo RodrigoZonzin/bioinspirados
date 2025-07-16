@@ -54,10 +54,10 @@ Key adaptations include:
 Originally, FPA global optimization is defined by the equation:  
 
 $$
-\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_*)
+\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_{\cdot})
 $$
 
-where $g_*$ is the global minimum and $L$ is a Lévy-distributed parameter.  
+where $g_{\cdot}$ is the global minimum and $L$ is a Lévy-distributed parameter.  
 
 $$
 L \sim \frac{\lambda \Gamma(\lambda) \sin(\pi \lambda/2)}{\pi} \cdot \frac{1}{s^{1+\lambda}}
@@ -95,7 +95,7 @@ $$
 where $OX: \mathbf{x} \times \mathbf{x}_n \mapsto \mathbf{x}_n$ is the GA operator.
 
 #### Results  
-The global minimum is not known, but previous approaches have obtained $f_1(*) \approx 900$ and $f_2(*) \approx 22\,000$.
+The global minimum is not known, but previous approaches have obtained $f_1(\cdot) \approx 900$ and $f_2(\cdot) \approx 22\,000$.
 
 <div style="display: flex; justify-content: center; gap: 20px;">
   <img src="flower_pollination_algorithm_fssp/wallace_alteracao/results/variasExecucoes05.png" width="400"/>
