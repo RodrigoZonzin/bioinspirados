@@ -37,3 +37,48 @@ where  $\rho(a, b)$ represents the distance between cities $a$ and $b$. For test
   <img src="combinatorial_genetic_algorithm/results_ter_ox.png" width="400"/>
   <img src="combinatorial_genetic_algorithm/results2.png" width="400"/>
 </div>
+
+## Flower Pollination Algorithm - FSSP
+Proposed by Yang (2012), the FPA is simple and effective. It was implemented as a part of my final avaliation. In this project, we revisited the original continuous version and extended it to tackle the Flow Shop Scheduling Problem (FSSP), which demands a combinatorial representation.
+
+Key adaptations include:
+- Modified global and local pollination operators to maintain feasibility in the FSSP context.
+- Discretization of the Lévy distribution to preserve global permutation-based solutions.
+- Integration of ordered crossover (OX) as a local pollination strategy.  
+- Control of diversity through a tunable cut-rate parameter ($\tau$), determining how much of a solution’s structure is preserved.
+
+Originally, FPA global optimization is the deffined by the Equation: 
+
+$$\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_*)$$
+where $g_*$ is the global minimum and $L$ is a Levy-distributed parameter. 
+
+$$L \sim \frac{\lambda \Gamma(\lambda) sin(\pi \lambda/2)}{\pi} \frac{1}{s^{1+\lambda}}$$
+
+Locally, the pollination follows the Equation: 
+
+$$\mathbf{x}_i^{t+1} = \mathbf{x}_i^{t} + \epsilon (\mathbf{x}_j^t - \mathbf{x_k ^t})$$
+where $\epsilon$ follows a uniform distribution. 
+
+### Modifications: 
+To preserve an integer representation of the FSSP, such as
+$$\mathbf{x}_i = \begin{bmatrix}
+        a_1 & a_2 & \dots & a_n
+    \end{bmatrix}, \  a_i \in \mathbb{Z}^+$$
+
+we modified the continuous Lévy-distribution to a discrete representation. Then, 
+$$\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L_d(\mathbf{x}^{t}_i - g_*)$$
+
+Locally, we introduced the OX operator to maintain spatial-related optimization. For $i \neq j \neq k$
+$$\mathbf{x}_i, \ \mathbf{x}_j = OX(\mathbf{x}_i, \ \mathbf{x}_k)$$
+
+where $OX: \mathbf{x} \times \mathbf{x}_n \mapsto \mathbf{x}_n$ is the GA operator. 
+
+#### Results 
+The global minimum is not know, but previous approaches have obtained $f(\cdot) \approx 22 000$. 
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <img src="flower_pollination_algorithm_fssp/wallace_alteracao/results/variasExecucoes05.png" width="400"/>
+  <img src="flower_pollination_algorithm_fssp/wallace_alteracao/variasExecucoes07.png" width="400"/>
+</div>
+
+<img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="400" style="display: block; margin: auto"/>
+
