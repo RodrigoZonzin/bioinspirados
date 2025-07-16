@@ -88,7 +88,9 @@ $$
 
 Locally, we introduced the OX operator to maintain spatial-related optimization. For $i \neq j \neq k$,
 
-$$\mathbf{x}_i, \mathbf{x}_j = OX(\mathbf{x}_i,  \mathbf{x}_k) $$
+$$
+\mathbf{x}_i, \mathbf{x}_j = OX(\mathbf{x}_i,  \mathbf{x}_k) 
+$$
 
 where $OX: \mathbf{x} \times \mathbf{x}_n \mapsto \mathbf{x}_n$ is the GA operator.
 
