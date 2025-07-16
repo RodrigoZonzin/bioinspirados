@@ -81,13 +81,13 @@ The global minimum is not know, but previous approaches have obtained $f_1(*) \a
 </div>
 
 
-| Grupo | Mínimo | Tempo (s) |
-|-------|--------|-----------|
-| 1     | 914    | 35        |
-| 2     | 903    | 4.44      |
-| 3     | 919    | 55        |
-| 4     | 933    | 2.6       |
-| FPA   | 929    | 14.88     |
+| Grupo | Mín. (Inst. 05) | Tempo (s) | Mín. (Inst. 07) | Tempo (s) |
+|-------|------------------|-----------|------------------|-----------|
+| 1     | 914              | 35        | 2309             | 231       |
+| 2     | 903              | 4.44      | 2310             | 45        |
+| 3     | 919              | 55        | 2297             | 1.32      |
+| 4     | 933              | 2.6       | 2366             | 163       |
+| FPA   | 929              | 14.88     | 2410             | 27.63     |
 
 <img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="400" style="display: block; margin: auto"/>
 
