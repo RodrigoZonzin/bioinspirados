@@ -50,6 +50,7 @@ Key adaptations include:
 Originally, FPA global optimization is the deffined by the Equation: 
 
 $$\mathbf{x}^{t+1}_i = \mathbf{x}^{t}_i + L(\mathbf{x}^{t}_i - g_*)$$
+
 where $g_*$ is the global minimum and $L$ is a Levy-distributed parameter. 
 
 $$L \sim \frac{\lambda \Gamma(\lambda) sin(\pi \lambda/2)}{\pi} \frac{1}{s^{1+\lambda}}$$
