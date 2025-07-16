@@ -45,7 +45,7 @@ where $\rho(a, b)$ represents the distance between cities $a$ and $b$. For testi
 ## Flower Pollination Algorithm - FSSP  
 Proposed by Yang (2012), the FPA is simple and effective. It was implemented as part of my final evaluation. In this project, we revisited the original continuous version and extended it to tackle the Flow Shop Scheduling Problem (FSSP), which demands a combinatorial representation.
 
-<img src="flower_pollination_algorithm_fssp/abelha_polen.jpg" width="200" style="display: block; margin: auto"/>
+![](flower_pollination_algorithm_fssp/abelha_polen.jpg)
 
 Key adaptations include:  
 - Modified global and local pollination operators to maintain feasibility in the FSSP context.  
