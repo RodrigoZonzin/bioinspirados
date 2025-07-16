@@ -28,6 +28,7 @@ Using parameter optimization, the following results were obtained:
 
 ### Travelling Salesman Problem  
 Classic combinatorial optimization problem that aims to find the shortest possible route that visits a set of cities exactly once and returns to the starting point. Given a permutation $\pi$ of $n$ cities, the total distance is defined by:
+![Graph Example](combinatorial_genetic_algorithm/grafo.png)
 
 $$
 f(\pi)=\sum_{i=1}^{n-1} \rho(\pi(i), \pi(i+1))+\rho(\pi(n), \pi(1))
@@ -45,7 +46,7 @@ where $\rho(a, b)$ represents the distance between cities $a$ and $b$. For testi
 ## Flower Pollination Algorithm - FSSP  
 Proposed by Yang (2012), the FPA is simple and effective. It was implemented as part of my final evaluation. In this project, we revisited the original continuous version and extended it to tackle the Flow Shop Scheduling Problem (FSSP), which demands a combinatorial representation.
 
-![](flower_pollination_algorithm_fssp/abelha_polen.jpg)
+![Beeee](flower_pollination_algorithm_fssp/abelha_polen.jpg)
 
 Key adaptations include:  
 - Modified global and local pollination operators to maintain feasibility in the FSSP context.  
